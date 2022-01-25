@@ -27,9 +27,17 @@ export default function (props) {
       <input
         type='checkbox'
         name='reading'
-        checked={props.form.reading}
-        onChange={props.changeHandler}
+        value='reading'
+        checked={props.form.hobbies.includes('reading')}
+        onChange={props.handleCheckbox}
       /> Reading
+      <input
+        type='checkbox'
+        name='swimming'
+        value='swimming'
+        checked={props.form.hobbies.includes('swimming')}
+        onChange={props.handleCheckbox}
+      /> Swimming
       <button type='button' onClick={props.clickHandler}>
         Click me
       </button>

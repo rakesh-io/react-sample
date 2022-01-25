@@ -17,40 +17,52 @@ function App() {
     lastname: '',
     cars: 'audi',
     gender: 'female',
-    reading: false
+    hobbies: [],
   });
 
   const clickHandler = () => {
     console.log('Form ->', form);
-  }
-  const changeHandler = (event) => {
-    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+  };
+
+  const handleCheckbox = (event) => {
+    console.log(event.target.checked, event.target.value);
+    const value = event.target.checked
+      ? [...form.hobbies, event.target.value]
+      : form.hobbies.filter((hobby) => hobby !== event.target.value);
     setForm({
       ...form,
-      [event.target.name]: value
-    })
-  }
+      hobbies: value,
+    });
+  };
+
+  const changeHandler = (event) => {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleVegetable = () => {
     console.log('handle Vegetable called');
     setShowVeg(!showVeg);
     console.log(showVeg);
-  }
+  };
 
-  if(show === true) {
+  if (show === true) {
     return (
       <div>
         <h1>Hello World!</h1>
-        <Form clickHandler={clickHandler} changeHandler={changeHandler} form={form} />
-        { showFruits &&  <Fruits fruits={fruits} />}
-        { showVeg ? <Vegetables veg={veggies}/> : <h4>Veggies not visible</h4>}
-        <button type="button" onClick={handleVegetable}>Toggle Vegetables</button>
-        <ButtonsProblem />
+        <Form clickHandler={clickHandler} changeHandler={changeHandler} handleCheckbox={handleCheckbox} form={form} />
+        {showFruits && <Fruits fruits={fruits} />}
+        {showVeg ? <Vegetables veg={veggies} /> : <h4>Veggies not visible</h4>}
+        <button type='button' onClick={handleVegetable}>
+          Toggle Vegetables
+        </button>
+        {showVeg &&  <ButtonsProblem tempprop={'this is just a prop'} clickHandler={clickHandler}/> }
       </div>
     );
   }
 
-  return <h1>Not Found</h1>
-
+  return <h1>Not Found</h1>;
 }
 export default App;
