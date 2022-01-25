@@ -1,68 +1,30 @@
-import { useState } from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import Auth from './components/Auth';
 import ButtonsProblem from './components/ButtonProblem';
 import Form from './components/Form';
 import Fruits from './components/Fruits';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import NotFound from './components/NotFound';
+import UserDetails from './components/UserDetails';
+import Users from './components/Users';
 import { Vegetables } from './components/Vegetables';
 
 function App() {
-  const fruits = ['grapes', 'bananas', 'pears', 'oranges', 'apples', 'apples'];
-  const veggies = ['potato', 'cucumber'];
-  const show = true;
-  const showFruits = true;
-
-  const [showVeg, setShowVeg] = useState(true);
-  const [form, setForm] = useState({
-    firstname: '',
-    lastname: '',
-    cars: 'audi',
-    gender: 'female',
-    hobbies: [],
-  });
-
-  const clickHandler = () => {
-    console.log('Form ->', form);
-  };
-
-  const handleCheckbox = (event) => {
-    console.log(event.target.checked, event.target.value);
-    const value = event.target.checked
-      ? [...form.hobbies, event.target.value]
-      : form.hobbies.filter((hobby) => hobby !== event.target.value);
-    setForm({
-      ...form,
-      hobbies: value,
-    });
-  };
-
-  const changeHandler = (event) => {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleVegetable = () => {
-    console.log('handle Vegetable called');
-    setShowVeg(!showVeg);
-    console.log(showVeg);
-  };
-
-  if (show === true) {
-    return (
-      <div>
-        <h1>Hello World!</h1>
-        <Form clickHandler={clickHandler} changeHandler={changeHandler} handleCheckbox={handleCheckbox} form={form} />
-        {showFruits && <Fruits fruits={fruits} />}
-        {showVeg ? <Vegetables veg={veggies} /> : <h4>Veggies not visible</h4>}
-        <button type='button' onClick={handleVegetable}>
-          Toggle Vegetables
-        </button>
-        {showVeg &&  <ButtonsProblem tempprop={'this is just a prop'} clickHandler={clickHandler}/> }
-      </div>
-    );
-  }
-
-  return <h1>Not Found</h1>;
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/fruits' element={<Fruits />} />
+        <Route path='/vegetables' element={<Vegetables />} />
+        <Route path='/sample-form' element={<Auth><Form /></Auth>} />
+        <Route path='/buttons-problem' element={<ButtonsProblem />} />
+        <Route path='/users' element={<Users />} />
+        <Route path='/users/:userId' element={<UserDetails />} />
+      </Routes>
+    </>
+  );
 }
 export default App;
