@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { incrementButtonCounter, setLastButton } from '../store/actions';
 
 export default function ButtonsProblem() {
-  const [buttonCounter, setButtonCounter] = useState(0);
-  const [lastButtonClicked, setLastButtonClicked] = useState(0);
+  // const [buttonCounter, setButtonCounter] = useState(0);
+  // const [lastButtonClicked, setLastButtonClicked] = useState(0);
+  const buttonCounter = useSelector(state => state.buttonCounter);
+  const lastButtonClicked = useSelector(state => state.lastButtonClicked);
 
-  useEffect(() => {
-    console.log('useEffect called'); // component did mount + component did update
-  });
+  const dispatch = useDispatch();
 
-//   INFINITE LOOP
-//   useEffect(() => {
-//     console.log('useEffect called'); // component did mount + component did update
-//     setButtonCounter(buttonCounter + 1)
-//   }, [buttonCounter]);
+  const increaseButtonCounter = () => {
+    dispatch(incrementButtonCounter());
+  }
 
-  useEffect(() => {
-    return () => {
-      console.log('unmounting'); // component will unmount
-    };
-  });
+  const setLastButtonClicked = (index) => {
+    dispatch(setLastButton(index))
+  }
 
   const getAllButtons = () => {
     let buttonsArray = [];
@@ -37,7 +35,7 @@ export default function ButtonsProblem() {
     <div>
       <h1>Buttons Counter: {buttonCounter}</h1>
       <h1>Last Button Clicked Counter: {lastButtonClicked}</h1>
-      <button onClick={() => setButtonCounter(buttonCounter + 1)}>Add a button</button>
+      <button onClick={increaseButtonCounter}>Add a button</button>
       {getAllButtons()}
     </div>
   );
