@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function () {
   const [data, setData] = useState([]);
@@ -18,6 +18,7 @@ export default function () {
           <Link to={'/users/' + user.id}>{user.name}</Link>
         </li>
       ))}
+      <Outlet />
     </ol>
   );
 }
