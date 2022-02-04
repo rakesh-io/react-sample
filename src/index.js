@@ -7,8 +7,21 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './store/reducer';
+import axios from 'axios';
 
 const store = createStore(reducer);
+
+axios.interceptors.request.use(
+  (req) => {
+     req.headers = {
+       token: localStorage.getItem('token')
+     }
+     return req;
+  },
+  (err) => {
+     return Promise.reject(err);
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>

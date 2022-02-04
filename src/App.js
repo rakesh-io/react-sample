@@ -9,21 +9,25 @@ import Navbar from './components/Navbar';
 import UserDetails from './components/UserDetails';
 import Users from './components/Users';
 import { Vegetables } from './components/Vegetables';
+import { AuthContext } from './context';
 
 function App() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/fruits' element={<Fruits />} />
-        <Route path='/vegetables' element={<Vegetables />} />
-        <Route path='/sample-form' element={<Auth><Form /></Auth>} />
-        <Route path='/buttons-problem' element={<ButtonsProblem />} />
-        <Route path='/users' element={<Users />}>
-          <Route path=':userId' element={<UserDetails />} />
-        </Route>
-      </Routes>
+      <AuthContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/fruits' element={<Fruits />} />
+          <Route path='/vegetables' element={<Vegetables />} />
+          <Route path='/sample-form' element={<Auth><Form /></Auth>} />
+          <Route path='/buttons-problem' element={<ButtonsProblem />} />
+          <Route path='/users' element={<Users />}>
+            <Route path=':userId' element={<UserDetails />} />
+          </Route>
+        </Routes>
+        </AuthContext.Provider>
     </>
   );
 }

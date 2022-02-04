@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import { MyContext } from "../context";
 
 export default function (props) {
   const [form, setForm] = useState({
@@ -29,13 +31,31 @@ export default function (props) {
       ...form,
       [event.target.name]: event.target.value,
     });
+    // this.setState({
+    //   ...state,
+    //   [event.target.name]: event.target.value
+    // })
   };
+
+  const handleFile = (event) => {
+    setForm({
+      ...form,
+      placeImg: event.target.file
+    })
+  }
+
+  const submitForm = () => {
+    // const params = new URLSearchParams();
+    // params.append('placeImg', form.placeImg);
+    // axios.post('http://localhost:5000/places/createPlace', params)
+  }
   return (
     <>
+    <MyContext.Provider value={{}}>
       <h1>Sample Form</h1>
       <form>
         <input type='text' name='firstname' onChange={changeHandler} value={form.firstname} />
-        <input type='text' name='lastname' onChange={changeHandler} value={form.lastname} />
+        <input type='text' name='lastname' onChange={(event) => changeHandler(event, 'rakesh')} value={form.lastname} />
         <select name='cars' value={form.cars} onChange={changeHandler}>
           <option value={'volvo'}>Volvo</option>
           <option value={'audi'}>Audi</option>
@@ -74,7 +94,12 @@ export default function (props) {
         <button type='button' onClick={clickHandler}>
           Click me
         </button>
+        <input type="file" name="placeImg" onChange={handleFile} />
+        <button type='button' onClick={submitForm}>
+          Submit
+        </button>
       </form>
+      </MyContext.Provider>
     </>
   );
 }

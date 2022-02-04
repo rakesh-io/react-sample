@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AuthContext } from '../context';
 import { incrementButtonCounter, setLastButton } from '../store/actions';
 
 export default function ButtonsProblem() {
@@ -105,6 +106,11 @@ export default function ButtonsProblem() {
 //               <li key={user.id}>{user.name}</li>
 //             ))}
 //           </ol>
+//           <AuthContext.Consumer>
+//             {
+//               value => <Form value={value} />
+//             }
+//           </AuthContext.Consumer>
 //           <h1>Buttons Counter: {this.state.buttonCounter}</h1>
 //           <h1>Last Button Clicked Counter: {this.state.lastButtonClicked}</h1>
 //           <button onClick={() => this.setState({ buttonCounter: this.state.buttonCounter + 1 })}>Add a button</button>
